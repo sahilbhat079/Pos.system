@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Shared/Header";
-import Home from "./pages/Home";
+
 import BottomNav from "./components/Shared/BottomNav";
-import Orders from "./pages/Orders";
-import Table from "./pages/Table";
+import { Home,Orders,Table } from "./pages";
+
 ;
 
 const App: React.FC = () => {
