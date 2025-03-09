@@ -21,7 +21,7 @@ import  {getAvatarName} from "../../utils";
 
 const OrderList: React.FC = () => {
   return (
-    <div className="flex items-center gap-5 mb-3">
+    <div className="flex items-center gap-3 mb-2">
       {/* Avatar Button */}
       <button className="bg-[#f6b100] p-3 text-xl font-bold rounded-lg">
         {getAvatarName("Sahil Gani")}

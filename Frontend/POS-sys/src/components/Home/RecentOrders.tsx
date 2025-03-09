@@ -4,7 +4,7 @@ import OrderList from "./OrderList";
 
 const RecentOrders:React.FC = () => {
   return (
-    <div className="px-8 mt-6">
+    <div className="px-8 mt-6 ">
     <div className="bg-[#1a1a1a] w-full h-[450px] rounded-lg">
       <div className="flex justify-between items-center px-6 py-4">
         <h1 className="text-[#f5f5f5] text-lg font-semibold tracking-wide">
@@ -25,7 +25,14 @@ const RecentOrders:React.FC = () => {
       </div>
 
       {/* Order list */}
-      <div className="mt-4 px-6 overflow-y-scroll h-[300px] scrollbar-hide">
+      <div className="mt-3 px-4 overflow-y-scroll h-[300px] scrollbar-hide custom-scrollbar">
+        <OrderList />;
+        <OrderList />;
+        <OrderList />;
+        <OrderList />;
+        <OrderList />;
+        <OrderList />;
+        <OrderList />;
         <OrderList />;
         <OrderList />;
         <OrderList />;

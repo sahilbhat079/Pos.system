@@ -24,6 +24,7 @@ interface Order {
   };
 }
 
+// Dummy Order Data
 const orders: Order[] = [
   {
     _id: "1",
@@ -64,9 +65,6 @@ const orders: Order[] = [
   },
 ];
 
-
-
-
 const Orders: React.FC = () => {
   const [status, setStatus] = useState<StatusType>("All");
 
@@ -74,15 +72,14 @@ const Orders: React.FC = () => {
     document.title = "POS | Orders";
   }, []);
 
-  
   // Filter orders based on status
   const filteredOrders =
     status === "All" ? orders : orders.filter((order) => order.status === status);
 
   return (
-    <section className="bg-[#1f1f1f] h-[calc(100vh-5rem)] overflow-hidden">
+    <section className="bg-[#1f1f1f] h-[calc(100vh-5rem)] overflow-hidden flex flex-col">
       {/* Header Section */}
-      <div className="flex items-center justify-between px-10 py-4">
+      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 gap-4">
         <div className="flex items-center gap-4">
           <BackButton />
           <h1 className="text-[#f5f5f5] text-2xl font-bold tracking-wider">
@@ -91,14 +88,13 @@ const Orders: React.FC = () => {
         </div>
 
         {/* Status Filter Buttons */}
-        <div className="flex items-center justify-around gap-4">
-          {["All", "In Progress", "Ready", "Completed"].map((type) => (
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
+          {(["All", "In Progress", "Ready", "Completed"] as StatusType[]).map((type) => (
             <button
               key={type}
-              onClick={() => setStatus(type as StatusType)}
-              className={`text-[#ababab] text-lg font-semibold px-5 py-2 rounded-lg ${
-                status === type ? "bg-[#383838]" : ""
-              }`}
+              onClick={() => setStatus(type)}
+              className={`text-[#ababab] text-sm sm:text-lg font-semibold px-4 py-2 rounded-lg transition-all
+                ${status === type ? "bg-[#383838] text-white" : "hover:bg-[#2a2a2a]"}`}
             >
               {type}
             </button>
@@ -107,11 +103,11 @@ const Orders: React.FC = () => {
       </div>
 
       {/* Order List */}
-      <div className="grid grid-cols-3 gap-3 px-16 py-4 overflow-y-scroll scrollbar-hide">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-6 py-4 overflow-y-auto">
         {filteredOrders.length > 0 ? (
           filteredOrders.map((order) => <OrderCard key={order._id} order={order} />)
         ) : (
-          <p className="col-span-3 text-gray-500">No orders available</p>
+          <p className="col-span-full text-center text-gray-500">No orders available</p>
         )}
       </div>
     </section>

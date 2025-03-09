@@ -3,8 +3,17 @@ import BottomNav from "../components/Shared/BottomNav";
 import BackButton from "../components/Shared/BackButton";
 import TableCard from "../components/Table/TableCard";
 
+// Table Interface
+interface Table {
+  id: string;
+  name: string;
+  status: "Available" | "Booked";
+  initials: string;
+  seats: number;
+}
+
 // Dummy Table Data
-const tables = [
+const tables: Table[] = [
   { id: "1", name: "A1", status: "Available", initials: "Sahil", seats: 4 },
   { id: "2", name: "A2", status: "Booked", initials: "Mehak", seats: 2 },
   { id: "3", name: "B1", status: "Available", initials: "Ali", seats: 6 },
@@ -12,19 +21,19 @@ const tables = [
   { id: "5", name: "C1", status: "Available", initials: "Sadiya", seats: 2 },
 ];
 
-const Tables = () => {
-  const [status, setStatus] = useState("all");
+const Tables: React.FC = () => {
+  const [status, setStatus] = useState<"all" | "booked">("all");
 
   useEffect(() => {
     document.title = "POS | Tables";
   }, []);
 
   // Filter Tables Based on Status
-  const filteredTables =
+  const filteredTables: Table[] =
     status === "all" ? tables : tables.filter((table) => table.status === "Booked");
 
   return (
-    <section className="bg-[#1f1f1f]  h-[calc(100vh-5rem)] overflow-hidden">
+    <section className="bg-[#1f1f1f] h-[calc(100vh-5rem)] overflow-hidden">
       {/* Header Section */}
       <div className="flex items-center justify-between px-5 py-4">
         <div className="flex items-center gap-4">
@@ -53,7 +62,7 @@ const Tables = () => {
       </div>
 
       {/* Tables Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-10 py-6 overflow-y-auto max-h-[70vh] scrollbar-hide">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 px-10 py-6 overflow-y-auto max-h-[70vh] scrollbar-hide">
         {filteredTables.map((table) => (
           <TableCard
             key={table.id}

@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Shared/Header";
 
 import BottomNav from "./components/Shared/BottomNav";
-import { Home,Orders,Table } from "./pages";
+import { Home,Orders,Table,Menu,Dashboard } from "./pages";
 
-;
+
 
 const App: React.FC = () => {
   return (
@@ -15,8 +15,12 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/orders" element={<Orders></Orders>} />
         <Route path="/table" element={<Table></Table>} />
+        <Route path="/menu" element={<Menu/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+
+
       </Routes>
-      <BottomNav/>
+     <BottomNav/>
     </Router>
   );
 };

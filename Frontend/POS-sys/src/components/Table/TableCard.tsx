@@ -24,7 +24,7 @@ const TableCard: React.FC<TableCardProps> = ({ id, name, status, initials, seats
     <div
       onClick={handleClick}
       key={id}
-      className={`w-[300px] hover:bg-[#2c2c2c] bg-[#262626] p-4 rounded-lg cursor-pointer
+      className={`w-[350px] hover:bg-[#2c2c2c] bg-[#262626] p-4 rounded-lg cursor-pointer
         ${status === "Booked" ? "bg-[#262626] opacity-50 cursor-not-allowed" : "hover:bg-[#2c2c2c] bg-[#262626]"}`}
     >
       {/* Table Header */}

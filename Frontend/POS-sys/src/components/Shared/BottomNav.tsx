@@ -30,6 +30,7 @@ const BottomNav: React.FC = () => {
   const handleCreateOrder = () => {
     console.log("Order Created:", { name, phone, guestCount });
     closeModal();
+    navigate("/table");
   };
 
   // Memoized function to check active route
@@ -45,10 +46,10 @@ const BottomNav: React.FC = () => {
         { path: "/", label: "Home", icon: <FaHome size={20} /> },
         { path: "/orders", label: "Orders", icon: <MdOutlineReorder size={20} /> },
         { path: "/table", label: "Tables", icon: <MdTableBar size={20} /> },
-        { path: "/more", label: "More", icon: <CiCircleMore size={20} /> },
+        { path: "/", label: "More", icon: <CiCircleMore size={20} /> },
       ].map(({ path, label, icon }) => (
         <button
-          key={path}
+          key={`${path}+${label}`}
           onClick={() => navigate(path)}
           className={`flex items-center justify-center font-bold px-4 py-2 rounded-[20px] flex-1 ${
             isActive(path) ? "text-[#f5f5f5] bg-[#343434]" : "text-[#ababab]"
@@ -62,9 +63,9 @@ const BottomNav: React.FC = () => {
       {/* Floating Action Button */}
       <button
         onClick={openModal}
-        disabled={isActive("/tables") || isActive("/menu")}
+        disabled={isActive("/table") || isActive("/menu")}
         className={`absolute bottom-6 bg-[#F6B100] text-[#f5f5f5] rounded-full p-4 flex items-center justify-center ${
-          isActive("/tables") || isActive("/menu") ? "opacity-50 cursor-not-allowed" : ""
+          isActive("/table") || isActive("/menu") ? "opacity-50 cursor-not-allowed" : ""
         }`}
         aria-label="Create Order"
       >
