@@ -13,11 +13,10 @@ interface CartItem {
 const initialCartData: CartItem[] = [
   { id: 1, name: "Product 1", quantity: 2, price: 100 },
   { id: 2, name: "Product 2", quantity: 1, price: 200 },
-  { id: 3, name: "Product 3", quantity: 3, price: 300 },
-  { id: 4, name: "Product 4", quantity: 3, price: 300 },
-  { id: 5, name: "Product 5", quantity: 3, price: 300 },
-  { id: 6, name: "Product 6", quantity: 3, price: 300 },
-  { id: 7, name: "Product 7", quantity: 3, price: 300 },
+  { id: 3, name: "Product 3", quantity: 3, price: 150 },
+  { id: 4, name: "Product 4", quantity: 1, price: 300 },
+  { id: 5, name: "Product 5", quantity: 2, price: 250 },
+  { id: 6, name: "Product 6", quantity: 1, price: 400 },
 ];
 
 const CartInfo: React.FC = () => {

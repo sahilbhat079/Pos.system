@@ -4,8 +4,6 @@ import { Menu } from "../../constants/Types";
 
 import { GrRadialSelected } from "react-icons/gr";
 import { FaShoppingCart } from "react-icons/fa";
-// import { useDispatch } from "react-redux";
-// import { addItems } from "../../redux/slices/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxhooks";
 import { addItem, removeItem, clearCart } from "../../store/slices/cartSlice";
 
@@ -59,7 +57,7 @@ const cart = useAppSelector((state) => state.cartReducer.items);
     setItemCount(0);
   };
 
-console.log(cart);
+// console.log(cart);
   return (
    
     <>

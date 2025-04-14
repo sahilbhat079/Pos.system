@@ -6,7 +6,12 @@ interface Customer {
     customerName: string;
     customerPhone?: string;
     guests: number;
-    table: number | null;
+    table: table | null;
+}
+
+interface table{
+    tableId: string;
+    tableNo: string;
 }
 
 
@@ -14,11 +19,14 @@ interface Customer {
 interface SetCustomerPayload {
     name: string;
     phone: string;
-    guests: number;
+    guestCount: number;
   }
   
   interface UpdateTablePayload {
-    table: number;
+    table: {
+      tableId: string;
+      tableNo: string;
+    };
   }
 
 
@@ -43,11 +51,11 @@ export const customerSlice = createSlice({
     initialState,
     reducers: {
         setCustomer: (state, action: PayloadAction<SetCustomerPayload>) => {
-            const { name, phone, guests } = action.payload;
+            const { name, phone, guestCount} = action.payload;
             state.orderId = `${Date.now()}`;
             state.customerName = name;
             state.customerPhone = phone;
-            state.guests = guests;
+            state.guests = guestCount;
           },
 
           removeCustomer: (state) => {

@@ -5,11 +5,16 @@ import { CiCircleMore } from "react-icons/ci";
 import { BiSolidDish } from "react-icons/bi";
 import { useNavigate, useLocation } from "react-router-dom";
 import Modal from "./Modal";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxhooks";
+import { setCustomer } from "../../store/slices/customer";
 
 const BottomNav: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
+
   
+
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   
@@ -28,7 +33,10 @@ const BottomNav: React.FC = () => {
 
   // Handle Create Order
   const handleCreateOrder = () => {
-    console.log("Order Created:", { name, phone, guestCount });
+    // console.log("Order Created:", { name, phone, guestCount });
+    // Dispatch action to store order details (if needed)
+    dispatch(setCustomer({name,phone,guestCount})); // Assuming you have a setCustomer action in your customer slice
+
     closeModal();
     navigate("/table");
   };

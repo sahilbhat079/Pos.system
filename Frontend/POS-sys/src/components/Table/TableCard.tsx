@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { useAppDispatch } from "../../hooks/reduxhooks";
+import { updateTable } from "../../store/slices/customer";
 
-// Define Type for Table Props
 interface TableCardProps {
   id: string;
   name: string;
@@ -11,21 +12,28 @@ interface TableCardProps {
   seats: number;
 }
 
+
 const TableCard: React.FC<TableCardProps> = ({ id, name, status, initials, seats }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  // Handle Table Click (Only if Available)
-  const handleClick = () => {
+  const handleClick = (name: string) => {
     if (status === "Booked") return;
+    const table = { tableId: id, tableNo: name };
+    dispatch(updateTable({table}));
     navigate(`/menu`);
   };
 
+  const cardClasses = `
+    w-[350px] p-4 rounded-lg 
+    ${status === "Booked" ? "bg-[#262626] opacity-50 cursor-not-allowed" : "bg-[#262626] hover:bg-[#2c2c2c] cursor-pointer"}
+  `;
+
   return (
     <div
-      onClick={handleClick}
+      onClick={status !== "Booked" ? () => handleClick(name) : undefined}
       key={id}
-      className={`w-[350px] hover:bg-[#2c2c2c] bg-[#262626] p-4 rounded-lg cursor-pointer
-        ${status === "Booked" ? "bg-[#262626] opacity-50 cursor-not-allowed" : "hover:bg-[#2c2c2c] bg-[#262626]"}`}
+      className={cardClasses}
     >
       {/* Table Header */}
       <div className="flex items-center justify-between px-1">

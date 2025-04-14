@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import BackButton from "../components/Shared/BackButton";
 import { MdRestaurantMenu } from "react-icons/md";
+import { useAppSelector } from "../hooks/reduxhooks";
 
 // Lazy-loaded components
 const MenuContainer = React.lazy(() => import("../components/Menu/MenuContainer"));
@@ -8,7 +9,9 @@ const CustomerInfo = React.lazy(() => import("../components/Menu/CustomerInfo"))
 const CartInfo = React.lazy(() => import("../components/Menu/CartInfo"));
 const Bill = React.lazy(() => import("../components/Menu/Bill"));
 
+
 const Menu: React.FC = () => {
+  const customerData = useAppSelector((state) => state.customerReducer);
   React.useEffect(() => {
     document.title = "POS | Menu";
   }, []);
@@ -29,10 +32,10 @@ const Menu: React.FC = () => {
               <MdRestaurantMenu className="text-[#f5f5f5] text-3xl sm:text-4xl" />
               <div className="flex flex-col items-start">
                 <h1 className="text-sm sm:text-md text-[#f5f5f5] font-semibold tracking-wide">
-                  {false || "Customer Name"}
+                  {customerData.customerName || "Customer Name"}
                 </h1>
                 <p className="text-xs text-[#ababab] font-medium">
-                  Table: {false || "N/A"}
+                  Table: {customerData.table?.tableNo|| "N/A"}
                 </p>
               </div>
             </div>

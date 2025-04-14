@@ -15,7 +15,7 @@ interface Bills {
 }
 
 interface CustomerDetails {
-  name: string;s
+  name: string;
   phone: string;
   guests: number;
 }
