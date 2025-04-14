@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Invoice from "../Invoices/Invoice";
-
+import { useAppSelector } from "../../hooks/reduxhooks";
 // Order item structure
 interface OrderItem {
     name: string;
@@ -41,7 +41,22 @@ interface OrderItem {
  
 
 
-const orderData: OrderInfo = {
+
+
+
+// Define types
+type CartItem = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+
+const Bill: React.FC = () => {
+
+  const orderData: OrderInfo = {
+    // Sample data for the order
+    // In a real application, this data would be fetched from an API or database
     orderDate: new Date().toISOString(),
     customerDetails: {
       name: "John Doe",
@@ -65,25 +80,9 @@ const orderData: OrderInfo = {
   };
 
 
-// Define types
-type CartItem = {
-  id: number;
-  name: string;
-  price: number;
-};
-
-
-const Bill: React.FC = () => {
-
 // State for controlling invoice visibility
-
-
-
-  // Mock cart data (Replace with real data in actual use)
-  const [cartData, setCartData] = useState<CartItem[]>([
-    { id: 1, name: "Burger", price: 150 },
-    { id: 2, name: "Pizza", price: 300 },
-  ]);
+const customerDetails=useAppSelector((state) => state.customerReducer);
+const cartData= useAppSelector((state) => state.cartReducer.items);
 
   const [total, setTotal] = useState<number>(0);
   const taxRate: number = 5.25;
@@ -93,6 +92,8 @@ const Bill: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState<string | undefined>();
   const [showInvoice, setShowInvoice] = useState<boolean>(false);
   const [orderInfo, setOrderInfo] = useState<OrderInfo | null>(null);
+
+
 
   // Calculate total price and tax when cartData changes
   useEffect(() => {
@@ -112,13 +113,13 @@ const Bill: React.FC = () => {
     const mockOrderData: OrderInfo = {
       orderDate: new Date().toISOString(),
       customerDetails: {
-        name: "John Doe",
-        phone: "1234567890",
-        guests: 2,
+        name: customerDetails.customerName,
+        phone: customerDetails?.customerPhone || "Not Provided",
+        guests: customerDetails.guests,
       },
       items: cartData.map(item => ({
         name: item.name,
-        quantity: 1, // Assuming 1 quantity for simplicity
+        quantity: item.quantity, // Assuming 1 quantity for simplicity
         price: item.price
       })),
       bills: {

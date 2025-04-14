@@ -1,27 +1,27 @@
 import React, { useEffect, useRef } from "react";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaNotesMedical } from "react-icons/fa6";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxhooks";
+import { clearCart ,removeItem} from "../../store/slices/cartSlice";
+
 
 // Define the cart item type
 interface CartItem {
-  id: string | number;
+  id:  number;
   name: string;
   quantity: number;
   price: number;
 }
 
 const initialCartData: CartItem[] = [
-  { id: 1, name: "Product 1", quantity: 2, price: 100 },
-  { id: 2, name: "Product 2", quantity: 1, price: 200 },
-  { id: 3, name: "Product 3", quantity: 3, price: 150 },
-  { id: 4, name: "Product 4", quantity: 1, price: 300 },
-  { id: 5, name: "Product 5", quantity: 2, price: 250 },
-  { id: 6, name: "Product 6", quantity: 1, price: 400 },
+
 ];
 
 const CartInfo: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const [cartData, setCartData] = React.useState<CartItem[]>(initialCartData);
+  // const [cartData, setCartData] = React.useState<CartItem[]>(initialCartData);
+  const dispatch = useAppDispatch();
+  const cartData= useAppSelector((state) => state.cartReducer.items);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -32,8 +32,8 @@ const CartInfo: React.FC = () => {
     }
   }, [cartData]);
 
-  const handleRemove = (itemId: string | number) => {
-    setCartData((prevCart) => prevCart.filter((item) => item.id !== itemId));
+  const handleRemove = (itemId: number) => {
+    dispatch(removeItem(itemId));
   };
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MdTableBar, MdCategory } from "react-icons/md";
 import { BiSolidDish } from "react-icons/bi";
+import Metrics from "../components/Dashboard/Metrics";
 
 // Define types for buttons and tabs
 type ButtonConfig = {
@@ -103,8 +104,8 @@ const Dashboard: React.FC = () => {
   </div>
 
   {/* Tab Content */}
-  {/* {activeTab === "Metrics" && <Metrics />}
-  {activeTab === "Orders" && <RecentOrders />} */}
+   {activeTab === "Metrics" && <Metrics />}
+  {/* {activeTab === "Orders" && <RecentOrders />}  */}
   {activeTab === "Payments" && (
     <div className="text-white p-4 md:p-6 container mx-auto">
       Payment Component Coming Soon

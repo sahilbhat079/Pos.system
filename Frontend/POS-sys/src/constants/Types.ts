@@ -65,3 +65,12 @@ export interface Dish {
     itemsData: Metric[];
   }
   
+
+
+
+export interface ItemData {
+  title: string;
+  percentage: string;
+  value: string | number;
+  color: string;
+}
