@@ -1,0 +1,9 @@
+eror handler done
+global error handler done 
+
+
+
+//create 
+Auths API
+/api/auth/register [POST] - Register a new user
+/api/auth/login [POST] - Login existing user and return token/session
