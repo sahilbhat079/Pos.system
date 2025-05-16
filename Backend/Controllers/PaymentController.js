@@ -2,7 +2,7 @@ const Razorpay = require("razorpay");
 const config = require("../config/config");
 const crypto = require("crypto");
 const createHttpError = require("http-errors");
-const Payment = require("../models/paymentModel");
+const Payment = require("../models/PaymentModal");
 
 // Initialize Razorpay instance once to reuse
 const razorpay = new Razorpay({
@@ -14,6 +14,7 @@ const razorpay = new Razorpay({
 const createOrder = async (req, res, next) => {
   try {
     const { amount } = req.body;
+    console.log(config.razorpayKeyId, config.razorpaySecretKey);
 
     if (!amount || amount <= 0) {
       return next(createHttpError(400, "Amount must be greater than zero"));

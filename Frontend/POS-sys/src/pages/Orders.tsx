@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import OrderCard from "../components/Orders/OrderCard";
 import BackButton from "../components/Shared/BackButton";
+import BottomNav from "../components/Shared/BottomNav";
 
 // Define order status types
 type StatusType = "All" | "In Progress" | "Ready" | "Completed";
@@ -110,6 +111,7 @@ const Orders: React.FC = () => {
           <p className="col-span-full text-center text-gray-500">No orders available</p>
         )}
       </div>
+      <BottomNav/>
     </section>
   );
 };

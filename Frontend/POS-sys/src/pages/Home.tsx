@@ -5,6 +5,7 @@ import { GrInProgress } from "react-icons/gr";
 import MiniCard from '../components/Home/MiniCard';
 import PopularDishes from '../components/Home/PopularDishes';
 import RecentOrders from '../components/Home/RecentOrders';
+import BottomNav from '../components/Shared/BottomNav';
 
 const Home: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const Home: React.FC = () => {
       <div className="flex-1 lg:flex-[2] r">
         <PopularDishes />
       </div>
+      <BottomNav></BottomNav>
     </section>
   );
 };

@@ -8,6 +8,7 @@ interface UserState {
   phone: string;
   role: string;
   isAuth: boolean;
+  accessToken?: string;
 }
 
 // Define the payload type for setting user
@@ -15,8 +16,10 @@ interface SetUserPayload {
   _id: string;
   name: string;
   email: string;
-  phone: string;
+  phone: any;
   role: string;
+  accessToken: string|undefined;
+  isAuth: boolean;
 }
 
 // Initial State
@@ -27,6 +30,7 @@ const initialState: UserState = {
   phone: "",
   role: "",
   isAuth: false,
+  accessToken: undefined,
 };
 
 // Create the user slice
@@ -35,13 +39,14 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<SetUserPayload>) => {
-      const { _id, name, phone, email, role } = action.payload;
+      const { _id, name, phone, email, role,isAuth,accessToken } = action.payload;
       state._id = _id;
       state.name = name;
-      state.phone = phone;
+      state.phone = phone
       state.email = email;
       state.role = role;
-      state.isAuth = true;
+      state.isAuth = isAuth;
+      state.accessToken = accessToken;
     },
 
     removeUser: (state) => {
@@ -51,6 +56,7 @@ const userSlice = createSlice({
       state.phone = "";
       state.role = "";
       state.isAuth = false;
+      state.accessToken = undefined;
     },
   },
 });

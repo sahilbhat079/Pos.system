@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import BackButton from "../components/Shared/BackButton";
 import { MdRestaurantMenu } from "react-icons/md";
 import { useAppSelector } from "../hooks/reduxhooks";
+import BottomNav from "../components/Shared/BottomNav";
 
 // Lazy-loaded components
 const MenuContainer = React.lazy(() => import("../components/Menu/MenuContainer"));
@@ -61,6 +62,7 @@ const Menu: React.FC = () => {
           <Bill />
         </Suspense>
       </div>
+      <BottomNav></BottomNav>
     </section>
   );
 };
