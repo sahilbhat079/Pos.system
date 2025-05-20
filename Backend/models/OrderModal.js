@@ -17,7 +17,7 @@ const orderSchema = new mongoose.Schema({
     orderStatus: {
         type: String,
         enum: ["pending", "preparing", "served", "cancelled"],
-        required: true
+        required: false
     },
 
     orderDate: {
@@ -33,19 +33,20 @@ const orderSchema = new mongoose.Schema({
 
     items: [
         {
-            itemName: { type: String, required: true },
+            name: { type: String, required: true },
             quantity: { type: Number, required: true, min: 1 },
             price: { type: Number, required: true }
         }   ],
 
     table: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: "Table" 
+        ref: "Table" ,
+        required: false
     },
 
     paymentMethod: {
         type: String,
-        enum: ["cash", "card", "upi", "razorpay"]
+        enum: ["cash", "card", "upi", "razorpay","Online","Cash"]
     },
 
     paymentData: {

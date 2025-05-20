@@ -63,14 +63,15 @@ const verifyPayment = async (req, res, next) => {
 // Handle Razorpay webhook calls (no authentication, verify signature instead)
 const webHookVerification = async (req, res, next) => {
   try {
-    const webhookSecret = config.razorpayWebhookSecret; // fixed typo here
+    const webhookSecret = config.razorpayWebhookSecret; 
     const signature = req.headers["x-razorpay-signature"];
-
+    // console.log("Webhook body:", req.body);
     if (!signature) {
       return next(createHttpError(400, "Missing webhook signature"));
     }
 
     const body = JSON.stringify(req.body);
+    // console.log("Webhook body stringified:", body);
 
     // Verify webhook signature
     const expectedSignature = crypto
@@ -82,7 +83,7 @@ const webHookVerification = async (req, res, next) => {
       return next(createHttpError(400, "Invalid webhook signature"));
     }
 
-    console.log("Webhook verified:", req.body);
+    // console.log("Webhook verified:", req.body);
 
     // Process payment captured event
     if (req.body.event === "payment.captured") {

@@ -42,6 +42,7 @@ interface InvoiceProps {
 
 const Invoice: React.FC<InvoiceProps> = ({ orderInfo, setShowInvoice }) => {
   const invoiceRef = useRef<HTMLDivElement>(null);
+  console.log("this is the" +orderInfo);
 
   const handlePrint = () => {
     if (!invoiceRef.current) return;

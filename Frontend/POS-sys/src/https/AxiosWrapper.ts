@@ -98,7 +98,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = store.getState().userReducer?.accessToken;
     if (accessToken && config.headers) {
-      console.log("[AxiosWrapper] Access Token:", accessToken);
+      // console.log("[AxiosWrapper] Access Token:", accessToken);
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;

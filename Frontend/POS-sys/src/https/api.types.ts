@@ -35,13 +35,17 @@ export interface Order {
 }
 
 export interface CreateOrderRequest {
-  amount: number;
-  currency: string;
-  receipt: string;
+ amount: number;
 }
 
 export interface VerifyPaymentRequest {
-  orderId: string;
-  paymentId: string;
-  signature: string;
+ razorpay_order_id: string;
+ razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+
+
+export interface VerifyPaymentResponse {
+  success: boolean;
+  message: string;
 }

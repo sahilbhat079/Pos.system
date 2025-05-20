@@ -6,6 +6,7 @@ import {
   Table,
   CreateOrderRequest,
   VerifyPaymentRequest,
+  VerifyPaymentResponse,
   Order,
 } from "../https/api.types";
 
@@ -43,7 +44,25 @@ interface RegisterResponse {
   accessToken: string;
   
 }
-   
+
+interface PaymentResponse {
+  success: boolean;
+  order: {
+    amount: number;
+    amount_due: number;
+    amount_paid: number;
+    attempts: number;
+    created_at: number;
+    currency: string;
+    entity: string;
+    id: string;
+    notes: any[]; // Or you can replace with a more specific type
+    offer_id: string | null;
+    receipt: string;
+    status: string;
+  };
+}
+
 
 
 export const register = (data: RegisterRequest) =>
@@ -70,14 +89,14 @@ export const updateTable = ({
 
 // Payment Endpoints
 export const createOrderRazorpay = (data: CreateOrderRequest) =>
-  axiosWrapper.post("/api/payment/create-order", data);
+  axiosWrapper.post<PaymentResponse>("/api/payment/create-order", data);
 
 export const verifyPaymentRazorpay = (data: VerifyPaymentRequest) =>
-  axiosWrapper.post("/api/payment/verify-payment", data);
+  axiosWrapper.post<VerifyPaymentResponse>("/api/payment/verify-payment", data);
 
 // Order Endpoints
 export const addOrder = (data: any) =>
-  axiosWrapper.post("/api/orders/", data);
+  axiosWrapper.post<any>("/api/orders/", data);
 
 export const getOrders = () =>
   axiosWrapper.get<Order[] | any>("/api/orders");

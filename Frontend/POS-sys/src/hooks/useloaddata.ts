@@ -13,7 +13,7 @@ const useLoadData = () => {
 
   // // Get existing user state (for accessToken and isAuth)
   const { accessToken,isAuth} = useSelector((state: RootState) => state.userReducer);
-  console.log("[useLoadData] Access Token:", accessToken,isAuth);
+  // console.log("[useLoadData] Access Token:", accessToken,isAuth);
   
   useEffect(() => {
     //  if (!accessToken) return; 

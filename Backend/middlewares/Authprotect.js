@@ -10,7 +10,7 @@ exports.protect = async (req, res, next) => {
     // 1. Check for Access Token
     if (authHeader && authHeader.startsWith("Bearer ")) {
         token = authHeader.split(" ")[1];
-        console.log("Access Token:", token);
+        // console.log("Access Token:", token);
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);

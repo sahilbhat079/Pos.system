@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // ✅ Define Type for Cart Items
 interface CartItem {
-   id: number;
+  id: number;
   name: string;
   pricePerQuantity: number;
   quantity: number;
-  price: number;
+  price: number;  // total price for quantity (pricePerQuantity * quantity)
 }
 
 // ✅ Define Type for Cart State
@@ -34,6 +34,10 @@ const cartSlice = createSlice({
     },
   },
 });
+
+// Selector to get total price of all items in the cart
+export const getTotalPrice = (state: { cart: CartState }) =>
+  state.cart.items.reduce((total, item) => total + item.price, 0);
 
 export const { addItem, removeItem, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

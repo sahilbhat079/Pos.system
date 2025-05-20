@@ -30,7 +30,7 @@ app.use(cookieParser());
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('NGROK WORKING Hello World!');
 });
 
 
@@ -41,10 +41,11 @@ app.use("/api/auth",require('./routes/AuthRouts'));
 //table routes
 app.use("/api/table", require('./routes/TableRoute'));
 
+
 //order routes
 app.use("/api/orders", require('./routes/OrderRoutes'));
 
-
+     
 //payment routes
 app.use("/api/payment", require('./routes/PaymentRoutes'));
 

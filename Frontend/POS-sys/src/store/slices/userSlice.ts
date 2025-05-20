@@ -45,7 +45,7 @@ const userSlice = createSlice({
       state.phone = phone
       state.email = email;
       state.role = role;
-      state.isAuth = isAuth;
+      state.isAuth = isAuth ;
       state.accessToken = accessToken;
     },
 

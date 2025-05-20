@@ -62,7 +62,7 @@ const Header: React.FC = () => {
 
       {/* Logged User Details */}
       <div className="flex items-center gap-4">
-        {userData.role === "Admin" && (
+        {userData.role === "admin" && (
           <div
             onClick={() => navigate("/dashboard")}
             className="bg-[#1f1f1f] rounded-[15px] p-3 cursor-pointer"

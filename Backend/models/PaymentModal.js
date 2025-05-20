@@ -6,7 +6,7 @@ const paymentSchema = new mongoose.Schema({
     required: true,
   },
   orderId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Order",
     required: true,
   },
@@ -20,12 +20,12 @@ const paymentSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["created", "paid", "failed"],
+    // enum: ["created", "paid", "failed","captured"],
     default: "created",
   },
   method: {
     type: String,
-    enum: ["cash", "card", "upi", "razorpay"],
+    // enum: ["cash", "card", "upi", "razorpay","Cash"],
     required: true,
   },
   email: {
@@ -39,9 +39,8 @@ const paymentSchema = new mongoose.Schema({
   contact: {
     type: String,
     validate: {
-      validator: (v) =>
-        !v || /^\d{10}$/.test(v),
-      message: "Contact must be a 10-digit phone number",
+       validator: (v) => !v || /^\d{10}$/.test(v) || /^\+91\d{10}$/.test(v),
+    message: "Contact must be a 10-digit number or +91 followed by 10 digits"
     },
   },
   createdAt: {
