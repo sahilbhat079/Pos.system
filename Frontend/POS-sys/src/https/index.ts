@@ -75,11 +75,11 @@ export const logout = () =>
   axiosWrapper.post<{ message: string }>("/api/auth/logout");
 
 // Table Endpoints
-export const addTable = (data: Partial<Table>) =>
-  axiosWrapper.post<{ message: string; table: Table }>("/api/table/", data);
+export const addTable = (data: any) =>
+  axiosWrapper.post<any>("/api/table/", data);
 
 export const getTables = () =>
-  axiosWrapper.get<Table[]>("/api/table");
+  axiosWrapper.get<any>("/api/table");
 
 export const updateTable = ({
   tableId,
@@ -109,3 +109,9 @@ export const updateOrderStatus = ({
   orderStatus: string;
 }) =>
   axiosWrapper.put(`/api/orders/${orderId}`, { orderStatus });
+
+ export const deleteTable = (tableId: string) =>
+  axiosWrapper.delete<any>(`/api/table/${tableId}`);
+
+export const monthlyEarning = () =>
+  axiosWrapper.get<any>("/api/orders/earning/monthly");

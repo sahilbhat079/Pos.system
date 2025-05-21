@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import BottomNav from "../components/Shared/BottomNav";
 import BackButton from "../components/Shared/BackButton";
 import TableCard from "../components/Table/TableCard";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getTables } from "../https/index";
+import { enqueueSnackbar } from "notistack";
 
 // Table Interface
 interface Table {
   id: string;
   name: string;
-  status: "Available" | "Booked";
+  status: "Available" | "Booked" |String;
   initials: string;
   seats: number;
 }
@@ -22,61 +25,93 @@ const tables: Table[] = [
 ];
 
 const Tables: React.FC = () => {
-  const [status, setStatus] = useState<"all" | "booked">("all");
+    const [status, setStatus] = useState("all");
 
-  useEffect(() => {
-    document.title = "POS | Tables";
-  }, []);
+    useEffect(() => {
+      document.title = "POS | Tables"
+    }, [])
 
-  // Filter Tables Based on Status
-  const filteredTables: Table[] =
-    status === "all" ? tables : tables.filter((table) => table.status === "Booked");
+  const { data: resData, isError } = useQuery({
+    queryKey: ["tables"],
+    queryFn: async () => {
+      return await getTables();
+    },
+    placeholderData: keepPreviousData,
+  });
+
+  if(isError) {
+    enqueueSnackbar("Something went wrong!", { variant: "error" })
+  }
+  // Filter tables based on status
+  const filteredTables =
+    status === "all"
+      ? resData?.data || []
+      : resData?.data?.filter((table: any) => table.status === status) || [];
+
 
   return (
-    <section className="bg-[#1f1f1f] h-[calc(100vh-5rem)] overflow-hidden">
-      {/* Header Section */}
-      <div className="flex items-center justify-between px-5 py-4">
+    
+   <section className="bg-[#1f1f1f]  h-[calc(100vh-5rem)] overflow-hidden ">
+      <div className="flex items-center justify-between px-10 py-4">
         <div className="flex items-center gap-4">
           <BackButton />
-          <h1 className="text-[#f5f5f5] text-2xl font-bold tracking-wide">
+          <h1 className="text-[#f5f5f5] text-2xl font-bold tracking-wider">
             Tables
           </h1>
         </div>
-        {/* Status Filters */}
-        <div className="flex gap-4">
+        <div className="flex items-center justify-around gap-4">
           <button
             onClick={() => setStatus("all")}
-            className={`text-[#ababab] text-lg px-5 py-2 font-semibold transition-all 
-              ${status === "all" ? "bg-[#383838] text-white rounded-lg" : ""}`}
+            className={`text-[#ababab] text-lg ${
+              status === "all" && "bg-[#383838] rounded-lg px-5 py-2"
+            }  rounded-lg px-5 py-2 font-semibold`}
           >
             All
           </button>
           <button
-            onClick={() => setStatus("booked")}
-            className={`text-[#ababab] text-lg px-5 py-2 font-semibold transition-all 
-              ${status === "booked" ? "bg-[#383838] text-white rounded-lg" : ""}`}
+            onClick={() => setStatus("Booked")}
+            className={`text-[#ababab] text-lg ${
+              status === "booked" && "bg-[#383838] rounded-lg px-5 py-2"
+            }  rounded-lg px-5 py-2 font-semibold`}
           >
             Booked
           </button>
         </div>
       </div>
 
-      {/* Tables Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 px-10 py-6 overflow-y-auto max-h-[70vh] scrollbar-hide">
-        {filteredTables.map((table) => (
-          <TableCard
-            key={table.id}
-            id={table.id}
-            name={table.name}
-            status={table.status}
-            initials={table.initials}
-            seats={table.seats}
-          />
-        ))}
+      <div className="grid grid-cols-4 gap-2 px-16 py-4 h-[650px]  scrollbar-hide  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  overflow-y-auto max-h-[70vh] scrollbar-hide ">
+        {filteredTables.map((table:any) => {
+          return (
+            <TableCard
+              id={table._id}
+              key={table._id}
+              name={table.tableNo}
+              status={table.status}
+              initials={table?.currentOrder?.customerDetails.name}
+              seats={table.seats}
+            />
+          );
+        })}
       </div>
 
       <BottomNav />
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   );
 };
 

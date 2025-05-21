@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { body, param } = require("express-validator");
-const { addOrder, getOrderById, getOrders, updateOrder } = require("../Controllers/OrderController");
+const { addOrder, getOrderById, getOrders, updateOrder,getMonthlyEarnings  } = require("../Controllers/OrderController");
 const { protect } = require("../middlewares/Authprotect");
 const mongoose = require("mongoose");
 
@@ -32,6 +32,8 @@ router.get(
 
 // GET /orders - get all orders
 router.get("/", protect, getOrders);
+
+router.get("/earning/monthly", getMonthlyEarnings);
 
 // PUT /orders/:id - update order status
 router.put(

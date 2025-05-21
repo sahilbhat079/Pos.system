@@ -5,7 +5,7 @@ const paymentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  orderId: {
+  orderId: {  
     type: String,
     ref: "Order",
     required: true,

@@ -112,4 +112,9 @@ const webHookVerification = async (req, res, next) => {
   }
 };
 
+
+
+
+
+// Export the functions to be used in routes
 module.exports = { createOrder, verifyPayment, webHookVerification };

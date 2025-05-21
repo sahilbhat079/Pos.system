@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import { MdTableBar, MdCategory } from "react-icons/md";
 import { BiSolidDish } from "react-icons/bi";
 import Metrics from "../components/Dashboard/Metrics";
+import RecentOrders from "../components/Dashboard/Orders";
+import Modal from "../components/Dashboard/Modal";
+import TablesUpdate from "../components/Dashboard/TablesUpdate";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Define types for buttons and tabs
+// Types
 type ButtonConfig = {
   label: string;
   icon: React.JSX.Element;
@@ -12,7 +16,6 @@ type ButtonConfig = {
 
 type TabConfig = string;
 
-// Define props for ActionButton and TabButton components
 interface ActionButtonProps {
   label: string;
   icon: React.JSX.Element;
@@ -25,33 +28,33 @@ interface TabButtonProps {
   onClick: () => void;
 }
 
-// Mock data for buttons and tabs
+// Buttons and tabs
 const buttons: ButtonConfig[] = [
   { label: "Add Table", icon: <MdTableBar />, action: "table" },
   { label: "Add Category", icon: <MdCategory />, action: "category" },
   { label: "Add Dishes", icon: <BiSolidDish />, action: "dishes" },
 ];
 
-const tabs: TabConfig[] = ["Metrics", "Orders", "Payments"];
+const tabs: TabConfig[] = ["Metrics", "Orders", "Tables"];
 
-// ActionButton component
+// Action button component
 const ActionButton: React.FC<ActionButtonProps> = ({ label, icon, onClick }) => (
   <button
     aria-label={label}
-    className="bg-[#1a1a1a] hover:bg-[#262626] px-8 py-3 rounded-lg text-[#f5f5f5] font-semibold text-md flex items-center gap-2"
+    className="bg-[#1a1a1a] hover:bg-[#262626] px-6 py-2 rounded-lg text-[#f5f5f5] font-semibold flex items-center gap-2"
     onClick={onClick}
   >
     {label} {icon}
   </button>
 );
 
-// TabButton component
+// Tab button component
 const TabButton: React.FC<TabButtonProps> = ({ label, isActive, onClick }) => (
   <button
-    className={`
-      px-8 py-3 rounded-lg text-[#f5f5f5] font-semibold text-md flex items-center gap-2 ${
-        isActive ? "bg-[#262626]" : "bg-[#1a1a1a] hover:bg-[#262626]"
-      }`}
+    aria-pressed={isActive}
+    className={`px-6 py-2 rounded-lg font-semibold flex items-center gap-2 text-[#f5f5f5] ${
+      isActive ? "bg-[#262626]" : "bg-[#1a1a1a] hover:bg-[#262626]"
+    }`}
     onClick={onClick}
   >
     {label}
@@ -60,61 +63,91 @@ const TabButton: React.FC<TabButtonProps> = ({ label, isActive, onClick }) => (
 
 // Main Dashboard component
 const Dashboard: React.FC = () => {
-  // State for modal and active tab
-  const [isTableModalOpen, setIsTableModalOpen] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<null | string>(null);
   const [activeTab, setActiveTab] = useState<TabConfig>("Metrics");
 
-  // Set document title on mount
   useEffect(() => {
     document.title = "POS | Admin Dashboard";
   }, []);
 
-  // Handle opening modal based on action
   const handleOpenModal = (action: string) => {
-    if (action === "table") setIsTableModalOpen(true);
-    // Add other conditions for different modals if needed
+    setOpenModal(action);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(null);
   };
 
   return (
-    <div className="bg-[#1f1f1f] h-[calc(100vh-5rem)]">
-  <div className="container mx-auto flex flex-col md:flex-row items-center justify-between py-6 px-4 md:px-6">
-    {/* Action Buttons */}
-    <div className="flex flex-wrap gap-2 mb-4 md:mb-0">
-      {buttons.map(({ label, icon, action }, index) => (
-        <ActionButton
-          key={index}
-          label={label}
-          icon={icon}
-          onClick={() => handleOpenModal(action)}
-        />
-      ))}
-    </div>
+    <div className="bg-[#1f1f1f] min-h-[calc(100vh-5rem)]">
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between py-6 px-4 md:px-6 gap-4">
+        {/* Action Buttons */}
+        <div className="flex flex-wrap gap-2">
+          {buttons.map(({ label, icon, action }, index) => (
+            <ActionButton
+              key={index}
+              label={label}
+              icon={icon}
+              onClick={() => handleOpenModal(action)}
+            />
+          ))}
+        </div>
 
-    {/* Tab Buttons */}
-    <div className="flex flex-wrap gap-2">
-      {tabs.map((tab, index) => (
-        <TabButton
-          key={index}
-          label={tab}
-          isActive={activeTab === tab}
-          onClick={() => setActiveTab(tab)}
-        />
-      ))}
-    </div>
-  </div>
+        {/* Tab Buttons */}
+        <div className="flex flex-wrap gap-2">
+          {tabs.map((tab, index) => (
+            <TabButton
+              key={index}
+              label={tab}
+              isActive={activeTab === tab}
+              onClick={() => setActiveTab(tab)}
+            />
+          ))}
+        </div>
+      </div>
 
-  {/* Tab Content */}
-   {activeTab === "Metrics" && <Metrics />}
-  {/* {activeTab === "Orders" && <RecentOrders />}  */}
-  {activeTab === "Payments" && (
-    <div className="text-white p-4 md:p-6 container mx-auto">
-      Payment Component Coming Soon
-    </div>
-  )}
+      {/* Tab Content with animations */}
+      <AnimatePresence mode="wait">
+        {activeTab === "Metrics" && (
+          <motion.div
+            key="metrics"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="px-4 md:px-6 mb-8"
+          >
+            <Metrics />
+          </motion.div>
+        )}
 
-  {/* Modal */}
-  {/* {isTableModalOpen && <Modal setIsTableModalOpen={setIsTableModalOpen} />} */}
-</div>
+        {activeTab === "Orders" && (
+          <motion.div
+            key="orders"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="px-4 md:px-6 mb-8"
+          >
+            <RecentOrders />
+          </motion.div>
+        )}
+
+        {activeTab === "Tables" && (
+          <motion.div
+            key="tables"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="px-4 md:px-6 py-4 mb-8"
+          >
+            <TablesUpdate />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Modal for "Add Table" */}
+      {openModal === "table" && <Modal setIsTableModalOpen={handleCloseModal} />}
+    </div>
   );
 };
 

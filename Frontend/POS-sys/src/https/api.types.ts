@@ -21,10 +21,8 @@ export interface User {
 }
 
 export interface Table {
-  id: string;
-  number: string;
-  capacity: number;
-  status: "available" | "occupied";
+  tableNo: number;
+  seats: number;
 }
 
 export interface Order {

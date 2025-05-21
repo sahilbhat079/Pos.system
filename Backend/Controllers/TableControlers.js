@@ -84,8 +84,36 @@ const updateTable = async (req, res, next) => {
   }
 };
 
+
+// Delete a table
+const deleteTable = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(createHttpError(400, "Invalid table ID!"));
+    }
+
+    const deletedTable = await Table.findByIdAndDelete(id);
+
+    if (!deletedTable) {
+      return next(createHttpError(404, "Table not found!"));
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Table deleted successfully!",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
 module.exports = {
   addTable,
   getTables,
   updateTable,
+  deleteTable,
 };

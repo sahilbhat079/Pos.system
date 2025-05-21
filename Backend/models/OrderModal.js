@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
     customerDetails: {
-        name: { type: String, required: true },
+        name: { type: String, },
         phone: { 
             type: String, 
             required: false,  // Optional now
@@ -16,7 +16,6 @@ const orderSchema = new mongoose.Schema({
     
     orderStatus: {
         type: String,
-        enum: ["pending", "preparing", "served", "cancelled"],
         required: false
     },
 

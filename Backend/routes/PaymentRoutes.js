@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const { protect } = require("../middlewares/Authprotect");
-const { createOrder, verifyPayment, webHookVerification } = require("../Controllers/PaymentController");
+const { createOrder, verifyPayment, webHookVerification, getMonthlyEarnings } = require("../Controllers/PaymentController");
+
+// Middleware to protect all routes
 
 // Protected routes — only verified users can create orders and verify payments
 router.route("/create-order").post(protect, createOrder);

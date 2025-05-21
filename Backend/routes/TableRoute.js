@@ -1,5 +1,5 @@
 const express = require("express");
-const { addTable, getTables, updateTable } = require("../Controllers/TableControlers");
+const { addTable, getTables, updateTable ,deleteTable} = require("../Controllers/TableControlers");
 const { protect } = require("../middlewares/Authprotect"); 
 const router = express.Router();
 
@@ -7,5 +7,6 @@ const router = express.Router();
 router.post("/", protect, addTable);
 router.get("/", protect, getTables);
 router.put("/:id", protect, updateTable);
+router.delete("/:id", deleteTable); 
 
 module.exports = router;

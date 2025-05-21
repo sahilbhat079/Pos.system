@@ -83,4 +83,54 @@ const updateOrder = async (req, res, next) => {
   }
 };
 
-module.exports = { addOrder, getOrderById, getOrders, updateOrder };
+
+getMonthlyEarnings = async (req, res) => {
+  try {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    // Get all orders of the current month
+    const earnings = await Order.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: startOfMonth, $lte: endOfMonth },
+          paymentMethod: { $exists: true },
+        },
+      },
+      {
+        $group: {
+          _id: "$paymentMethod",
+          total: { $sum: "$bills.totalWithTax" },
+        },
+      },
+    ]);
+
+    // Process results
+    let totalEarnings = 0;
+    const breakdown = {};
+
+    earnings.forEach(entry => {
+      totalEarnings += entry.total;
+      breakdown[entry._id.toLowerCase()] = entry.total;
+    });
+
+    return res.status(200).json({
+      totalEarnings,
+      currency: "INR",
+      breakdown,
+      message: "Monthly earnings (by payment method) fetched successfully",
+    });
+
+  } catch (error) {
+    console.error("Error fetching monthly earnings:", error);
+    return res.status(500).json({
+      message: "Something went wrong while fetching monthly earnings",
+    });
+  }
+};
+
+
+
+
+module.exports = { addOrder, getOrderById, getOrders, updateOrder, getMonthlyEarnings };
